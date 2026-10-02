@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>aGENtic Hub privacy policy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <p class="back"><a href="./">aGENtic Hub</a></p>
+    <h1>Privacy policy</h1>
+    <p class="meta">Last updated 2 October 2026</p>
+
+    <p>
+      aGENtic Hub is a desktop application for Windows. It runs on your own PC. The developer runs no servers
+      for it and receives none of your data: there is no account with us, no analytics and no telemetry.
+    </p>
+
+    <h2>Signing in with Google</h2>
+    <p>
+      When you choose "Sign in with Google", the app asks Google for your basic profile: your name, email
+      address and profile picture (the <code>openid</code>, <code>email</code> and <code>profile</code> scopes).
+      They are used only to show, inside the app, which Google account is signed in.
+    </p>
+    <p>
+      Google gives the app a token, which is stored in Windows Credential Manager on your PC. It is never sent to
+      the developer or to anyone else.
+    </p>
+    <p>
+      If you turn on a Google tool in the app (for example Google Drive, Gmail or Calendar), the app asks Google
+      for that service's access at that moment, and Google shows you what is requested. The app then reads or
+      writes in that service only when an agent works on a task you asked for, directly from your PC to Google.
+    </p>
+
+    <h2>Signing in with GitHub</h2>
+    <p>
+      When you choose "Sign in with GitHub", GitHub gives the app a token with access to your repositories
+      (the <code>repo</code> and <code>read:org</code> scopes). It is stored in Windows Credential Manager and
+      used only to create, update and share the repositories that hold your projects, in your own GitHub
+      account. New repositories are private unless you choose otherwise.
+    </p>
+
+    <h2>The AI models</h2>
+    <p>
+      To work on a task, the app sends what that task needs to the AI model providers you configured in the
+      app (for example your Databricks workspace, Google AI Studio or OpenRouter). That can include text from
+      files you attach and, if you turned on a Google tool, content the agent read from that service for the
+      task. What those providers do with it is governed by their own terms.
+    </p>
+    <p>
+      Data obtained through Google APIs is used only to provide the features you use in the app. It is not
+      sold, used for advertising, or shared with anyone else, and it is not used to train AI models by the
+      developer. The app's use of information received from Google APIs adheres to the
+      <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data
+      Policy</a>, including the Limited Use requirements.
+    </p>
+
+    <h2>Updates</h2>
+    <p>
+      When the app starts, it checks GitHub for a newer version and downloads it from this site's GitHub
+      repository. As with any download, GitHub receives your IP address.
+    </p>
+
+    <h2>Removing your data</h2>
+    <ul>
+      <li>Sign out in Settings → Accounts. Signing out of Google also revokes the app's access at Google.</li>
+      <li>
+        You can also remove access at any time at
+        <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a> and
+        <a href="https://github.com/settings/applications">github.com/settings/applications</a>.
+      </li>
+      <li>
+        Uninstalling the app and deleting <code>%LOCALAPPDATA%\aGENticHub</code> removes everything the app stored
+        on your PC. Repositories in your GitHub account stay there until you delete them.
+      </li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy:
+      <a href="https://github.com/JustEricGR/aGENticHub-releases/issues">open an issue on GitHub</a>.
+    </p>
+  </main>
+</body>
+</html>
