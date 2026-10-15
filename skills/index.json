@@ -17,6 +17,23 @@
    "accuracy": 94.9,
    "margin": 6.0,
    "signature": "2hZhi55C8ZG2N4rG4Nzgg4dflvQjhrUq9v7X23kmILDvg9hEIcHFLLKe+1HFBQ6mlUSimEIuCzi2ZDs9VFA2DA=="
+  },
+  "microsoft-word-write-well-structured-reports-and": {
+   "id": "microsoft-word-write-well-structured-reports-and",
+   "version": 1,
+   "files": {
+    "SKILL.md": "45803b57f49b86523aa47af3ca309d79a6c3791f80f52bc9c07dde07011dee90",
+    "training/best-1.png": "fd92c19bdf1d03312e7723791d42ac9107e3b26a9b50b3af2ab2b5a0dc47ced7",
+    "training/best-2.png": "6561df2046640ed8bcdd4a5cc9e235f9ea17a2a9c72955e9e0e7f0cb6dad0ee0",
+    "training/best-3.png": "a3202ab374b7ec358be46c89e64a46591d6b89a6f780c2e3f065911a65ec7cdc",
+    "training/report.json": "5d380c907fa15e0430cc9e790f44275b8377df35fe6b5516e79d86fbbb0d1d87"
+   },
+   "publisher": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
+   "published_at": "2026-10-15T21:01:35",
+   "software": "Microsoft Word",
+   "accuracy": 91.3,
+   "margin": 8.8,
+   "signature": "F+9b42PRS1HejW5bLRSLZ17IdIv8PK/wnS5bIA4N7Pp3sqcMnBGaYTB0v1/Ss73DHywWgcmmncmC+XxqoSmMBQ=="
   }
  }
 }
