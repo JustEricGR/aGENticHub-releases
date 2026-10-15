@@ -34,6 +34,23 @@
    "accuracy": 91.3,
    "margin": 8.8,
    "signature": "xrPKNz45Nk33MV3T6YFeVw4DChRTh1emltXlTFheV0xVL5e9p7XN7leP9KfIPpUqjdB16S96pVl9Z5lnoULZDg=="
+  },
+  "qgis-projects": {
+   "id": "qgis-projects",
+   "version": 1,
+   "files": {
+    "SKILL.md": "2542976ec33ca673b6e9fef93bec4596d9c95c9c4c7bea59b8b2318938e851a6",
+    "training/best-1.png": "aa86ac75b189082f42a006e03a729ce50ad2ad12a20dac1023b3b31a40003792",
+    "training/best-2.png": "56aec820082cd42fa048208089e13dd6af83478b9abf52a902112fe091a5a738",
+    "training/best-3.png": "999c92df0aef0888917e69983e014c4378967d5172bae3321aa8a1cedba5bb63",
+    "training/report.json": "758ca003e1c35b510ed1703d93c4a72319c232d29548d97a0c0bf8e6c1b1b35b"
+   },
+   "publisher": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
+   "published_at": "2026-10-15T21:02:43",
+   "software": "qgis",
+   "accuracy": 90.3,
+   "margin": 13.3,
+   "signature": "FsyfBEdyYnQeqgtYJBXtxhVDZj0m3lK4b5CZutYqDclGn1w1nhEi/Yi/PmDk7dokBM9Q1Jrnzx6ukuJnCQD0Dg=="
   }
  }
 }
