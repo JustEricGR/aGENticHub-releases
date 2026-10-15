@@ -51,6 +51,23 @@
    "accuracy": 90.3,
    "margin": 13.3,
    "signature": "FsyfBEdyYnQeqgtYJBXtxhVDZj0m3lK4b5CZutYqDclGn1w1nhEi/Yi/PmDk7dokBM9Q1Jrnzx6ukuJnCQD0Dg=="
+  },
+  "blender-solid-objects": {
+   "id": "blender-solid-objects",
+   "version": 1,
+   "files": {
+    "SKILL.md": "3248184f86ecea95d39f0027c5ab0cf80494aed11e6db2d8e609e40e8de3e867",
+    "training/best-1.png": "bedaf87e5a9ea9c917eb8af329a5b3a3718d1bf0e6f1b59b7dd8f2e659a58479",
+    "training/best-2.png": "b4e44ddee66f44331cf9812de4fe0a281554b9d3707689ac4f5bddaa7fc59fff",
+    "training/best-3.png": "4953b4fc16c38a68c44462d4981a6fb9af1cfc341c2e64638084715c53972475",
+    "training/report.json": "47a2b211620d7f0baff88364023f4f030afaf0e4771fae78cf570d5ad33daa15"
+   },
+   "publisher": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
+   "published_at": "2026-10-15T21:03:39",
+   "software": "blender",
+   "accuracy": 85.9,
+   "margin": 6.5,
+   "signature": "NKXQ1e99TFQQr7I6COpq15+xcDjWK6plgiZArJ5NdzABC4x0IlueA+OrIBGG1vGRx6WbcS7e/xHrXyCFXALFDw=="
   }
  }
 }
