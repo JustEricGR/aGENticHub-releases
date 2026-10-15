@@ -3,10 +3,19 @@
   "email_hash": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
   "github": "JustEricGR"
  },
- "members": [],
+ "members": [
+  {
+   "email_hash": "b9ea155799673b90c1c5369ec03f136bd90ea9a4f3ead395d15e3419da636971",
+   "role": "admin",
+   "github": "Danyy13",
+   "invited_at": "2026-10-15T17:56:29.768606+00:00",
+   "invited_by_name": "the master admin",
+   "nonce": "cb1c490997d2429a"
+  }
+ ],
  "source_repo": "JustEricGR/AnythIng",
  "format": 1,
- "updated_at": "2026-10-15T17:52:24.075147+00:00",
+ "updated_at": "2026-10-15T17:56:29.769851+00:00",
  "releases_repo": "JustEricGR/aGENticHub-releases",
- "signature": "8LvAKLZrgzJe+UI3MrhCjQjGQ0e6To6kEwoQx1bKF+2rdWutBz7oFxJ2dGCf9ZAbwxSuTdqgKUAjUqPacwvBDA=="
+ "signature": "g7s5Pw3r7fJXjFwxWWpGlRRpwZyso0UMq6HOyOxSOnoyZIUFr7PhhK2ZZUKJ1SpIahJJJoM8suh35BGQ6RRhBw=="
 }
