@@ -11,11 +11,19 @@
    "invited_at": "2026-10-15T17:56:29.768606+00:00",
    "invited_by_name": "the master admin",
    "nonce": "cb1c490997d2429a"
+  },
+  {
+   "email_hash": "8eeea2ec0bca58a07da6937e604a5b2d2f000aad6b73253ab035afe89a5f55d8",
+   "role": "admin",
+   "github": "Anollex",
+   "invited_at": "2026-10-15T18:05:20.141756+00:00",
+   "invited_by_name": "the master admin",
+   "nonce": "e6f86b0bb8c50796"
   }
  ],
  "source_repo": "JustEricGR/AnythIng",
  "format": 1,
- "updated_at": "2026-10-15T17:56:29.769851+00:00",
+ "updated_at": "2026-10-15T18:05:20.141918+00:00",
  "releases_repo": "JustEricGR/aGENticHub-releases",
- "signature": "g7s5Pw3r7fJXjFwxWWpGlRRpwZyso0UMq6HOyOxSOnoyZIUFr7PhhK2ZZUKJ1SpIahJJJoM8suh35BGQ6RRhBw=="
+ "signature": "xKuEUIrW+vZT5iWeQKp2fDmzelCXefFp46ft8Cl9vd1mwl7Qic9QsHaEOjZfy+bk82k8p7ZPfsCvYHS9qO4UDw=="
 }
