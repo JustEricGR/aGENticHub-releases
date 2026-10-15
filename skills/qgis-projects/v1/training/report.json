@@ -1,0 +1,598 @@
+{
+ "curve": [
+  {
+   "round": 1,
+   "level": 1,
+   "trained_on": 33.0,
+   "held_out": 58.2,
+   "accuracy": 50.0,
+   "requirements_met": 62.5,
+   "escalations": 1,
+   "directions": [
+    "Before any layer\u2011specific action, retrieve the layer by name with `QgsProject.instance().mapLayersByName('layer_name')`, confirm the list is non\u2011empty and that `layer.isValid()` returns True; if the layer is missing, create it via `QgsVectorLayer(path, 'layer_name', 'ogr')` and add it to the project with `QgsProject.instance().addMapLayer(layer)`.",
+    "When opening an attribute table (e.g., via `iface.showAttributeTable(layer)`), immediately verify that the active table belongs to the intended layer by checking `iface.attributeTable().layer().name()` (or the appropriate method) matches the layer name before performing sorting or selections.",
+    "After setting a renderer or any style on a layer, invoke `layer.triggerRepaint()` and confirm the change by asserting `layer.renderer().type()` equals the expected renderer type (e.g., `'graduatedSymbol'`) to ensure the style was applied correctly."
+   ]
+  },
+  {
+   "round": 2,
+   "level": 1,
+   "trained_on": 55.4,
+   "held_out": 70.5,
+   "accuracy": 60.0,
+   "requirements_met": 75.0,
+   "escalations": 2,
+   "directions": [
+    "After creating any derived layer (e.g., a buffer or a selection result), immediately set its name to the exact identifier required for downstream checks with layer.setName('expected_name') and verify with layer.name() == 'expected_name' before proceeding.",
+    "When calculating geometry metrics (area, length, count), explicitly define the measurement units using QgsDistanceArea (e.g., setSourceCrs, setEllipsoid, setUnit) and convert the result to the task's requested unit, then output the value as a plain number rounded to the required precision (e.g., print(round(value, 3))) so the answer can be parsed correctly.",
+    "Before writing the project file, ensure the project contains at least the expected number of layers and that each required layer name matches the pattern specified (case\u2011insensitive substring check) by iterating over QgsProject.instance().mapLayers().values() and asserting the condition; abort or raise an error if any required layer is missing before calling QgsProject.instance().write('path.qgz')."
+   ]
+  },
+  {
+   "round": 3,
+   "level": 2,
+   "trained_on": 40.7,
+   "held_out": 65.3,
+   "accuracy": 60.0,
+   "requirements_met": 74.2,
+   "escalations": 2,
+   "directions": [
+    "After invoking any processing algorithm (e.g., buffer, intersect, hillshade) via the processing framework, immediately inspect the returned dictionary for the 'OUTPUT' key, confirm it contains a non\u2011empty string path, then load the result with QgsVectorLayer/QgsRasterLayer and assert layer.isValid() before any downstream steps.",
+    "When applying an attribute filter or selection, construct a QgsExpression and QgsFeatureRequest, retrieve matching feature IDs with layer.getFeatures(request), apply selection with layer.selectByIds(ids), and then verify layer.selectedFeatureCount() equals the expected number of features.",
+    "Before writing any file (vector, raster, project, export image), ensure the target directory exists by calling QgsFileUtils.ensureFolderExists(QFileInfo(path).absolutePath()) and use an absolute path; after writing, confirm the file exists with QFileInfo(path).exists() and its size > 0."
+   ]
+  },
+  {
+   "round": 4,
+   "level": 2,
+   "trained_on": 37.1,
+   "held_out": 69.8,
+   "accuracy": 40.0,
+   "requirements_met": 67.2,
+   "escalations": 2,
+   "directions": [
+    "Always clear any existing selection on the target layer with layer.removeSelection() and confirm layer.selectedFeatureCount() == 0 before applying a new attribute\u2011based selection.",
+    "Select features programmatically via layer.selectByExpression('\"<field_name>\" = <value>', QgsVectorLayer.SetSelection) (using double\u2011quoted field names), then immediately check that layer.selectedFeatureCount() equals the expected number of matches.",
+    "When using the GUI Select by Expression dialog, after entering the expression trigger the dialog's 'Select Features' button (e.g., iface.selectByExpression(expression, layer) or iface.actionSelectByExpression().trigger()), wait for the dialog to close, and verify iface.activeLayer().selectedFeatureCount() matches the expected count before proceeding."
+   ]
+  },
+  {
+   "round": 5,
+   "level": 3,
+   "trained_on": 60.4,
+   "held_out": 54.8,
+   "accuracy": 60.0,
+   "requirements_met": 70.0,
+   "escalations": 1,
+   "directions": []
+  },
+  {
+   "round": 6,
+   "level": 3,
+   "trained_on": 39.6,
+   "held_out": 69.7,
+   "accuracy": 75.0,
+   "requirements_met": 87.5,
+   "escalations": 3,
+   "directions": [
+    "Before confirming any dialog (e.g., Buffer, Select by Location, Export Map), verify that the intended layer is selected in the dialog's dropdown list, then click the dialog's primary action button (Run/OK/Select) and wait for the operation to complete before proceeding; afterward, programmatically or via the UI check the expected result (e.g., layer appears, selection count).",
+    "To select features by attribute without code, open the attribute table (Layer \u25ba Open Attribute Table or press F6), click the \u2018Select features using an expression\u2019 button (or press Ctrl+F), ensure the top of the dialog shows the correct layer, type the expression with double\u2011quoted field names (e.g., \"floors\" = 4), press the \u2018Select\u2019 button (or Enter), and then verify that the layer\u2019s selected feature count matches the expected number.",
+    "Export a map image by navigating the exact menu path Project \u25ba Import/Export \u25ba Export Map to Image\u2026, set the extent to the current canvas (or define it), choose an absolute filename ending in .png, set the desired DPI/resolution, click the \u2018Save\u2019 button, and finally confirm that the PNG file exists on disk and has a non\u2011zero file size."
+   ]
+  },
+  {
+   "round": 7,
+   "level": 4,
+   "trained_on": 61.5,
+   "held_out": 74.0,
+   "accuracy": 80.0,
+   "requirements_met": 90.5,
+   "escalations": 2,
+   "directions": [
+    "Before saving any raster with NoData replacement, use the GDAL Translate algorithm via Processing Toolbox \u25ba GDAL \u25ba Translate, set 'Additional creation options' to '-a_nodata -9999' and ensure the output raster's minimum value is > 0 by checking the Layer Properties \u25ba Statistics tab after loading, never rely on manual value substitution.",
+    "To create a spatial selection based on proximity, always use Vector \u25ba Geoprocessing Tools \u25ba Buffer to create a buffer around the hazard zone, then use Vector \u25ba Research Tools \u25ba Select by Location with 'are within' and the buffer layer as the input, never use distance calculations without a precomputed buffer and verify the selection count via the attribute table's feature count display.",
+    "Before exporting a map as PNG, confirm the Print Layout exists by going to Project \u25ba New Print Layout, add a map item via the Add Item toolbar, set the extent to the desired layer, then use Layout \u25ba Export as Image and explicitly choose PNG format, ensuring the output file is created and its size is greater than 1 KB before proceeding."
+   ]
+  },
+  {
+   "round": 8,
+   "level": 4,
+   "trained_on": 42.4,
+   "held_out": 61.6,
+   "accuracy": 60.0,
+   "requirements_met": 72.1,
+   "escalations": 2,
+   "directions": [
+    "After completing any QGIS dialog (e.g., Project Properties, Export, Processing), click the primary action button (OK/Apply/Run/Save), then wait until the dialog window disappears before proceeding; immediately verify the change by querying the related property (e.g., QgsProject.instance().crs().authid() for CRS changes or layer.isValid() for new layers).",
+    "When adding a vector layer via the menu path Layer \u25ba Add Layer \u25ba Add Vector Layer\u2026, use the file chooser to select the dataset, press Open, then confirm the layer appears in the Layers panel with the expected name and that layer.isValid() returns True before performing any subsequent operations.",
+    "To export a map canvas as PNG, first create a Print Layout (Project \u25ba New Print Layout\u2026), set the map item extent and output size, then use Layout \u25ba Export as Image\u2026, enter the full path in the file field, press Save, and finally verify that the PNG file exists on disk and its file size is greater than zero bytes."
+   ]
+  },
+  {
+   "round": 9,
+   "level": 4,
+   "trained_on": 42.1,
+   "held_out": 68.2,
+   "accuracy": 60.0,
+   "requirements_met": 73.0,
+   "escalations": 4,
+   "directions": [
+    "When using the GUI 'Select by Location' tool (Vector \u25ba Research Tools \u25ba Select by Location\u2026), first set the 'Select features from' dropdown to the target layer, then set the 'Where the features (source) are located' list to the source layer, choose the exact spatial predicate (e.g., \"within\"), click the 'Run' button, and finally verify the selection by checking that the target layer\u2019s status bar shows the expected number of selected features.",
+    "To export a map image via the interface, open Project \u25ba Import/Export \u25ba Export Map to Image\u2026, enter an absolute file path ending in .png, ensure the 'Extent' is set to 'Current canvas extent' (or manually draw the extent), set the desired resolution (e.g., 300 dpi), click the 'Save' button, and after the dialog closes confirm the file exists on disk with a file\u2011info check.",
+    "When saving a processed vector layer through the UI, right\u2011click the layer, choose Export \u25ba Save Features As\u2026, select format \"GeoPackage\", provide an absolute output path (e.g., output/at_risk_arden_500.gpkg), check the 'Add saved file to map' option, click 'OK', then programmatically or via the layer list ensure the new layer is present, is valid, and its feature count matches the expected number."
+   ]
+  }
+ ],
+ "baseline_requirements_met": 60.0,
+ "final_requirements_met": 80.0,
+ "headline": {
+  "accuracy": 90.3,
+  "fully_right": 80.0,
+  "counts": [
+   12,
+   15
+  ],
+  "from": "exam (exam, 15 tests)",
+  "score": 78.5,
+  "margin": 13.3
+ },
+ "exam": {
+  "label": "exam",
+  "at": "2026-10-13T21:50:57",
+  "round": 9,
+  "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+  "accuracy": 90.3,
+  "margin": 13.3,
+  "fully_right": 80.0,
+  "counts": [
+   12,
+   15
+  ],
+  "score": 78.5,
+  "first": null,
+  "history": [
+   {
+    "label": "exam",
+    "round": 9,
+    "accuracy": 90.3
+   }
+  ],
+  "tests": 15
+ },
+ "benchmarks": [],
+ "accuracy": 60.0,
+ "mastery": {
+  "baseline": {
+   "scripting": 98.5,
+   "interface": 6.0,
+   "analysis": 97.0,
+   "building": 48.5,
+   "project": 41.0
+  },
+  "latest": {
+   "interface": 50.0,
+   "analysis": 99.2,
+   "scripting": 98.5,
+   "building": 50.0,
+   "project": 62.0
+  },
+  "final": {
+   "scripting": 44.0,
+   "interface": 100.0,
+   "analysis": 82.0,
+   "building": 100.0,
+   "project": 48.5
+  },
+  "project_weight": 0.5
+ },
+ "final_accuracy": 60.0,
+ "baseline": 51.8,
+ "baseline_label": "approved version",
+ "final": 65.0,
+ "transfer": {
+  "databricks/databricks-gpt-oss-120b": 90.5,
+  "databricks/databricks-qwen35-122b-a10b": 95.8
+ },
+ "models": {
+  "databricks/databricks-gpt-oss-120b": {
+   "mean": 52.5,
+   "attempts": 25
+  },
+  "databricks/databricks-qwen35-122b-a10b": {
+   "mean": 2.2,
+   "attempts": 2
+  },
+  "databricks/databricks-qwen3-next-80b-a3b-instruct": {
+   "mean": 58.0,
+   "attempts": 141
+  }
+ },
+ "tournament": {
+  "databricks/databricks-gpt-oss-120b": 50.3,
+  "databricks/databricks-qwen35-122b-a10b": 2.2,
+  "databricks/databricks-qwen3-next-80b-a3b-instruct": 50.8
+ },
+ "best": [
+  {
+   "task": "Set the project coordinate reference system to EPSG:32634 and confirm the change.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 100.0,
+   "notes": "Task completed correctly; CRS is set to EPSG:32634 and confirmed via gui_state; no errors detected.",
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round2-1-fc5c\\output\\_window.png",
+   "calls": 1,
+   "seconds": 5,
+   "route": "gui",
+   "verified": true,
+   "fraction": 1.0,
+   "capability": "interface",
+   "fault": "agent"
+  },
+  {
+   "task": "Make a map project of region Dalen: its cities styled by population (graduated) over the regions with the region names labelled; save the project as output/map_dalen.qgz and export the map as output/map_dalen.png.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 100.0,
+   "notes": "All required layers were added, cities styled with a graduated renderer based on population, regions labeled by name, project saved, and PNG exported correctly. No errors affected the final result.",
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round2-heldout-3-254b\\output\\map_dalen.png",
+   "calls": 41,
+   "seconds": 181,
+   "route": "project",
+   "verified": true,
+   "fraction": 1.0,
+   "plan": {
+    "plan": [
+     "new_project()",
+     "add_vector_layer('data/regions.gpkg', 'regions', 'regions')",
+     "add_vector_layer('data/cities.gpkg', 'cities', 'cities')",
+     "style_graduated('cities', 'population', 5)",
+     "set_labels('regions', 'name')",
+     "check_project()",
+     "save_project('output/map_dalen.qgz', render_png='output/map_dalen.png')"
+    ],
+    "replans": 2
+   },
+   "capability": "building",
+   "fault": "agent"
+  },
+  {
+   "task": "Select the cities that belong to region Belmor.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 100.0,
+   "notes": "The agent correctly opened the Select Features by Expression dialog, entered a proper expression, and executed the selection, resulting in the expected number of features. No methodological errors observed.",
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round6-heldout-3-b121\\output\\_window.png",
+   "calls": 7,
+   "seconds": 18,
+   "route": "gui",
+   "verified": true,
+   "fraction": 1.0,
+   "capability": "interface",
+   "fault": "agent"
+  },
+  {
+   "task": "Set the project's coordinate reference system to EPSG:3857 in the project properties.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 100.0,
+   "notes": "Task completed correctly: opened Project Properties, selected EPSG:3857, confirmed change; no errors or unnecessary steps.",
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round7-1-e749\\output\\_window.png",
+   "calls": 6,
+   "seconds": 12,
+   "route": "gui",
+   "verified": true,
+   "fraction": 1.0,
+   "capability": "interface",
+   "fault": "agent"
+  }
+ ],
+ "worst": [
+  {
+   "task": "Build a flood-risk project for region Arden from start to end: load the regions, houses and flood zone from data/; keep only the houses inside region Arden; find those within 500 m of the flood zone and save them to output/at_risk_arden_500.gpkg; print how many there are; style the flood zone semi-transparent blue and the at-risk houses red; save the project as output/flood_arden_500.qgz and export the map as output/flood_arden_500.png.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 0.0,
+   "notes": "The agent failed to execute any of the required steps, returning a rate\u2011limit error instead of loading data, creating the at\u2011risk layer, counting features, styling, saving the project, or exporting the map. Consequently no output files or answer were produced.",
+   "checks": [
+    "output_layer: wanted output_layer(name_like=at_risk_arden_500, geometry=point, features={'op': '==', 'value': 28.0}), saw ",
+    "answer: wanted answer(value=28, tolerance=0.01), saw : Error code: 429 - {'error_code': 'REQUEST_LIMIT_EXCEEDED', 'message': 'REQUEST_LIMIT_EXCEEDED: Exceeded workspace inpu",
+    "project_file: wanted project_file(pattern=*flood_arden_500.qgz, min_layers=2, layers_like=['flood']), saw no project saved",
+    "file: wanted file(pattern=*flood_arden_500.png), saw "
+   ],
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round8-retry-4-98ac\\output\\_window.png",
+   "calls": 0,
+   "seconds": 11,
+   "route": "project",
+   "verified": false,
+   "fraction": 0.0,
+   "plan": {
+    "plan": [
+     "Build a flood-risk project for region Arden from start to end: load the regions, houses and flood zone from data/; keep only the houses inside region Arden; find those within 500 m of the flood zone and save them to output/at_risk_arden_500.gpkg; print how many there are; style the flood zone semi-transparent blue and the at-risk houses red; save the project as output/flood_arden_500.qgz and export the map as output/flood_arden_500.png."
+    ],
+    "replans": 1
+   },
+   "capability": "project",
+   "fault": "agent"
+  },
+  {
+   "task": "Make a house-value map for region Belmor: the houses coloured by value (graduated, 5 classes) with the flood zone under them; save the project as output/houses_belmor.qgz and export the map as output/houses_belmor.png.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 0.0,
+   "notes": "No QGIS project file was created; the houses layer was not styled with a graduated renderer; the PNG map was not exported.",
+   "checks": [
+    "project_file: wanted project_file(pattern=*houses_belmor.qgz, min_layers=2, layers_like=['houses', 'flood']), saw no project saved",
+    "renderer: wanted renderer(layer_like=houses, type=graduatedSymbol), saw ",
+    "file: wanted file(pattern=*houses_belmor.png), saw "
+   ],
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round9-heldout-7-3579\\output\\_window.png",
+   "calls": 0,
+   "seconds": 9,
+   "route": "project",
+   "verified": false,
+   "fraction": 0.0,
+   "plan": {
+    "plan": [
+     "Make a house-value map for region Belmor: the houses coloured by value (graduated, 5 classes) with the flood zone under them; save the project as output/houses_belmor.qgz and export the map as output/houses_belmor.png."
+    ],
+    "replans": 1
+   },
+   "capability": "building",
+   "fault": "setup"
+  },
+  {
+   "task": "Open the attribute table of the regions layer, sort it by the field \"name\" in ascending order, and verify the sort order.",
+   "model": "databricks/databricks-qwen35-122b-a10b",
+   "score": 1.5,
+   "notes": "1. Never loaded the regions.gpkg layer into QGIS - remained in dialog loops without completing file selection. 2. No attribute table was ever opened (0/1 checks failed). 3. Agent got stuck navigating between Data Source Manager, OGR dialog, and GeoPackage dialog without progressing to layer loading or post-load tasks like sorting.",
+   "checks": [
+    "sorted_by: wanted sorted_by(field=name, order=asc), saw no attribute table open"
+   ],
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round1-tournament-1-c31d\\output\\_window.png",
+   "calls": 40,
+   "seconds": 94,
+   "route": "gui",
+   "verified": false,
+   "fraction": 0.0,
+   "capability": "interface"
+  },
+  {
+   "task": "Open the attribute table of the regions layer, sort it by the field \"name\" in ascending order, and verify the sort order.",
+   "model": "databricks/databricks-qwen3-next-80b-a3b-instruct",
+   "score": 1.5,
+   "notes": "1) The agent never opened the attribute table of the regions layer; it kept navigating Data Source Manager dialogs. 2) It never performed any sort operation on the 'name' field, so the required sorted_by check fails. 3) Repeated, unnecessary clicks in the Browser/Data Source Manager indicate the agent is stuck in a loop and not following the task sequence.",
+   "checks": [
+    "sorted_by: wanted sorted_by(field=name, order=asc), saw no attribute table open"
+   ],
+   "artifact": "C:\\Users\\eric1\\Documents\\aGENticHub\\projects\\personal\\_training\\20261009-103026-95df\\round1-tournament-1-9fd4\\output\\_window.png",
+   "calls": 40,
+   "seconds": 86,
+   "route": "gui",
+   "verified": false,
+   "fraction": 0.0,
+   "capability": "interface"
+  }
+ ],
+ "directions_added": 24,
+ "baseline_accuracy": 40.0,
+ "learned": [
+  {
+   "round": 1,
+   "directions": [
+    "Before any layer\u2011specific action, retrieve the layer by name with `QgsProject.instance().mapLayersByName('layer_name')`, confirm the list is non\u2011empty and that `layer.isValid()` returns True; if the layer is missing, create it via `QgsVectorLayer(path, 'layer_name', 'ogr')` and add it to the project with `QgsProject.instance().addMapLayer(layer)`.",
+    "When opening an attribute table (e.g., via `iface.showAttributeTable(layer)`), immediately verify that the active table belongs to the intended layer by checking `iface.attributeTable().layer().name()` (or the appropriate method) matches the layer name before performing sorting or selections.",
+    "After setting a renderer or any style on a layer, invoke `layer.triggerRepaint()` and confirm the change by asserting `layer.renderer().type()` equals the expected renderer type (e.g., `'graduatedSymbol'`) to ensure the style was applied correctly."
+   ]
+  },
+  {
+   "round": 2,
+   "directions": [
+    "After creating any derived layer (e.g., a buffer or a selection result), immediately set its name to the exact identifier required for downstream checks with layer.setName('expected_name') and verify with layer.name() == 'expected_name' before proceeding.",
+    "When calculating geometry metrics (area, length, count), explicitly define the measurement units using QgsDistanceArea (e.g., setSourceCrs, setEllipsoid, setUnit) and convert the result to the task's requested unit, then output the value as a plain number rounded to the required precision (e.g., print(round(value, 3))) so the answer can be parsed correctly.",
+    "Before writing the project file, ensure the project contains at least the expected number of layers and that each required layer name matches the pattern specified (case\u2011insensitive substring check) by iterating over QgsProject.instance().mapLayers().values() and asserting the condition; abort or raise an error if any required layer is missing before calling QgsProject.instance().write('path.qgz')."
+   ]
+  },
+  {
+   "round": 3,
+   "directions": [
+    "After invoking any processing algorithm (e.g., buffer, intersect, hillshade) via the processing framework, immediately inspect the returned dictionary for the 'OUTPUT' key, confirm it contains a non\u2011empty string path, then load the result with QgsVectorLayer/QgsRasterLayer and assert layer.isValid() before any downstream steps.",
+    "When applying an attribute filter or selection, construct a QgsExpression and QgsFeatureRequest, retrieve matching feature IDs with layer.getFeatures(request), apply selection with layer.selectByIds(ids), and then verify layer.selectedFeatureCount() equals the expected number of features.",
+    "Before writing any file (vector, raster, project, export image), ensure the target directory exists by calling QgsFileUtils.ensureFolderExists(QFileInfo(path).absolutePath()) and use an absolute path; after writing, confirm the file exists with QFileInfo(path).exists() and its size > 0."
+   ]
+  },
+  {
+   "round": 4,
+   "directions": [
+    "Always clear any existing selection on the target layer with layer.removeSelection() and confirm layer.selectedFeatureCount() == 0 before applying a new attribute\u2011based selection.",
+    "Select features programmatically via layer.selectByExpression('\"<field_name>\" = <value>', QgsVectorLayer.SetSelection) (using double\u2011quoted field names), then immediately check that layer.selectedFeatureCount() equals the expected number of matches.",
+    "When using the GUI Select by Expression dialog, after entering the expression trigger the dialog's 'Select Features' button (e.g., iface.selectByExpression(expression, layer) or iface.actionSelectByExpression().trigger()), wait for the dialog to close, and verify iface.activeLayer().selectedFeatureCount() matches the expected count before proceeding."
+   ]
+  },
+  {
+   "round": 6,
+   "directions": [
+    "Before confirming any dialog (e.g., Buffer, Select by Location, Export Map), verify that the intended layer is selected in the dialog's dropdown list, then click the dialog's primary action button (Run/OK/Select) and wait for the operation to complete before proceeding; afterward, programmatically or via the UI check the expected result (e.g., layer appears, selection count).",
+    "To select features by attribute without code, open the attribute table (Layer \u25ba Open Attribute Table or press F6), click the \u2018Select features using an expression\u2019 button (or press Ctrl+F), ensure the top of the dialog shows the correct layer, type the expression with double\u2011quoted field names (e.g., \"floors\" = 4), press the \u2018Select\u2019 button (or Enter), and then verify that the layer\u2019s selected feature count matches the expected number.",
+    "Export a map image by navigating the exact menu path Project \u25ba Import/Export \u25ba Export Map to Image\u2026, set the extent to the current canvas (or define it), choose an absolute filename ending in .png, set the desired DPI/resolution, click the \u2018Save\u2019 button, and finally confirm that the PNG file exists on disk and has a non\u2011zero file size."
+   ]
+  },
+  {
+   "round": 7,
+   "directions": [
+    "Before saving any raster with NoData replacement, use the GDAL Translate algorithm via Processing Toolbox \u25ba GDAL \u25ba Translate, set 'Additional creation options' to '-a_nodata -9999' and ensure the output raster's minimum value is > 0 by checking the Layer Properties \u25ba Statistics tab after loading, never rely on manual value substitution.",
+    "To create a spatial selection based on proximity, always use Vector \u25ba Geoprocessing Tools \u25ba Buffer to create a buffer around the hazard zone, then use Vector \u25ba Research Tools \u25ba Select by Location with 'are within' and the buffer layer as the input, never use distance calculations without a precomputed buffer and verify the selection count via the attribute table's feature count display.",
+    "Before exporting a map as PNG, confirm the Print Layout exists by going to Project \u25ba New Print Layout, add a map item via the Add Item toolbar, set the extent to the desired layer, then use Layout \u25ba Export as Image and explicitly choose PNG format, ensuring the output file is created and its size is greater than 1 KB before proceeding."
+   ]
+  },
+  {
+   "round": 8,
+   "directions": [
+    "After completing any QGIS dialog (e.g., Project Properties, Export, Processing), click the primary action button (OK/Apply/Run/Save), then wait until the dialog window disappears before proceeding; immediately verify the change by querying the related property (e.g., QgsProject.instance().crs().authid() for CRS changes or layer.isValid() for new layers).",
+    "When adding a vector layer via the menu path Layer \u25ba Add Layer \u25ba Add Vector Layer\u2026, use the file chooser to select the dataset, press Open, then confirm the layer appears in the Layers panel with the expected name and that layer.isValid() returns True before performing any subsequent operations.",
+    "To export a map canvas as PNG, first create a Print Layout (Project \u25ba New Print Layout\u2026), set the map item extent and output size, then use Layout \u25ba Export as Image\u2026, enter the full path in the file field, press Save, and finally verify that the PNG file exists on disk and its file size is greater than zero bytes."
+   ]
+  },
+  {
+   "round": 9,
+   "directions": [
+    "When using the GUI 'Select by Location' tool (Vector \u25ba Research Tools \u25ba Select by Location\u2026), first set the 'Select features from' dropdown to the target layer, then set the 'Where the features (source) are located' list to the source layer, choose the exact spatial predicate (e.g., \"within\"), click the 'Run' button, and finally verify the selection by checking that the target layer\u2019s status bar shows the expected number of selected features.",
+    "To export a map image via the interface, open Project \u25ba Import/Export \u25ba Export Map to Image\u2026, enter an absolute file path ending in .png, ensure the 'Extent' is set to 'Current canvas extent' (or manually draw the extent), set the desired resolution (e.g., 300 dpi), click the 'Save' button, and after the dialog closes confirm the file exists on disk with a file\u2011info check.",
+    "When saving a processed vector layer through the UI, right\u2011click the layer, choose Export \u25ba Save Features As\u2026, select format \"GeoPackage\", provide an absolute output path (e.g., output/at_risk_arden_500.gpkg), check the 'Add saved file to map' option, click 'OK', then programmatically or via the layer list ensure the new layer is present, is valid, and its feature count matches the expected number."
+   ]
+  }
+ ],
+ "hours": 5.04,
+ "cost": 0,
+ "stop_reason": "reached the round limit (9)",
+ "plan": {
+  "software": "QGIS",
+  "route": "qgis",
+  "how": "Three layers, rewarded by what QGIS itself reports. KNOWLEDGE: the QGIS documentation, the PyQGIS cookbook and GIS StackExchange, searchable (5350 chunks). CODE: PyQGIS scripts run headless in a sandbox, corrected from their own tracebacks. GUI: the live QGIS window operated with Qt clicks, typing and menus (plan-and-execute for long tasks), seen through its numbered controls and a vision model. Tasks run on a generated dataset whose answers are known; a reward counts only when every check passes. Verified successes become worked examples and fine-tuning pairs.",
+  "grading": [
+   "every check the task carries, evaluated on QGIS's own report (70%)",
+   "the supervisor's judgement of the method (30%)"
+  ],
+  "evidence": "verified state"
+ },
+ "routes": {
+  "code": {
+   "attempts": 59,
+   "verified": 45,
+   "mean": 75.5
+  },
+  "gui": {
+   "attempts": 43,
+   "verified": 12,
+   "mean": 32.2
+  },
+  "typed": {
+   "attempts": 3,
+   "verified": 0,
+   "mean": 4.2
+  },
+  "knowledge": {
+   "attempts": 1,
+   "verified": 0,
+   "mean": 68.0
+  },
+  "project": {
+   "attempts": 62,
+   "verified": 20,
+   "mean": 57.7
+  }
+ },
+ "verified_rate": 45.8,
+ "knowledge": {
+  "pages": 565,
+  "chunks": 12027,
+  "embedder": "nvidia/llama-nemotron-embed-vl-1b-v2",
+  "built_at": "2026-10-09T10:48:04"
+ },
+ "setup_problems": [],
+ "self_test": {
+  "at": "2026-10-13T21:23:00",
+  "routes": {
+   "code": true,
+   "typed": true,
+   "gui": true,
+   "project": true
+  }
+ },
+ "episodes": 123,
+ "sft_pairs": 123,
+ "errors_fixed": [
+  {
+   "error": "IndexError: list index out of range\",\"new_files\":[],\"script\":\"pyqgis_1.py\",\"hint\":\"Every script starts with an EMPTY project - no layer is loaded, whatever was added with other tools. Load what you need from the files fi",
+   "fix": "above_500 = QgsRasterLayer('output/above_500.tif', 'above_500') | 'INPUT': 'output/above_500.tif',",
+   "count": 19,
+   "capability": "scripting"
+  },
+  {
+   "error": "_core.QgsProcessingException: Unable to execute algorithm",
+   "fix": "from qgis.core import QgsRasterLayer, QgsProject | result = processing.run('gdal:rastercalculator', params)",
+   "count": 9,
+   "capability": "project"
+  },
+  {
+   "error": "ImportError: cannot import name 'processing' from 'qgis.core' (C:\\\\PROGRA~1\\\\QGIS40~1.2\\\\apps\\\\qgis\\\\python\\\\qgis\\\\core\\\\__init__.py)\",\"new_files\":[],\"script\":\"pyqgis_1.py",
+   "fix": "from qgis.core import QgsRasterLayer, QgsProject | import processing | params = { | 'INPUT_A': elevation_layer, | 'BAND_A': 1, | 'FORMULA': '(A > 500) * 1',",
+   "count": 7,
+   "capability": "scripting"
+  },
+  {
+   "error": "ValueError: that element is gone (its window changed) - list them again with gui_elements",
+   "fix": "{\"element\": 1}",
+   "count": 4,
+   "capability": "interface"
+  },
+  {
+   "error": "_core.QgsProcessingException: Could not create layer output/flood_zone_buffer_500.gpkg: Creation of data source failed (OGR error: A file system object called 'output/flood_zone_buffer_500.gpkg' already exists.)\",\"new_fi",
+   "fix": "path = 'output/at_risk_arden_500.gpkg' | if os.path.exists(path): | print('File exists:', path) | print('File does not exist:', path)",
+   "count": 3,
+   "capability": "project"
+  },
+  {
+   "error": "PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'output/flood_zone_buffer_500.gpkg'\",\"new_files\":[],\"script\":\"pyqgis_18.py",
+   "fix": "path = 'output/at_risk_arden_500.gpkg' | if os.path.exists(path): | print('File exists:', path) | else: | print('File does not exist:', path)",
+   "count": 3,
+   "capability": "project"
+  },
+  {
+   "error": "ImportError: PyQt5 classes cannot be imported in a QGIS build based on Qt6.",
+   "fix": "from qgis.PyQt.QtGui import QColor | print('Raster layer styled with continuous color ramp.')\"",
+   "count": 3,
+   "capability": "analysis"
+  },
+  {
+   "error": "_core.QgsProcessingException: Error: Algorithm native:summarizeattributes not found\",\"new_files\":[],\"script\":\"pyqgis_1.py",
+   "fix": "processing.run('native:aggregate', {'INPUT':'data/cities.gpkg', 'GROUP_BY':'region', 'AGGREGATES':[{'aggregate': 'sum', 'input': 'population', 'name': 'pop_total', 'type': 4}], 'OUTPUT':'output/regions_population.gpkg'})",
+   "count": 2,
+   "capability": "project"
+  },
+  {
+   "error": "KeyError: 'region'\",\"new_files\":[],\"script\":\"pyqgis_6.py",
+   "fix": "fields = [field.name() for field in layer.fields()] | print(fields) | print(feature.attributes()) | break",
+   "count": 2,
+   "capability": "project"
+  },
+  {
+   "error": "SyntaxError: invalid syntax\",\"new_files\":[],\"script\":\"pyqgis_2.py",
+   "fix": "import processing | import os | regions_layer = processing.run(\"native:extractbyattribute\", {\"INPUT\": \"data/regions.gpkg\", \"FIELD\": \"name\", \"OPERATOR\": 0, \"VALUE\": \"Fenwick\", \"OUTPUT\": \"memory:\"})[\"OUTPUT\"] | fenwick_code = None | for f in regions_layer.getFeatures(): | fenwick_code = f[\"code\"]",
+   "count": 2,
+   "capability": "project"
+  },
+  {
+   "error": "AttributeError: 'QgsExpressionContext' object has no attribute 'setVariable'. Did you mean: 'hasVariable'?\",\"new_files\":[],\"script\":\"pyqgis_1.py",
+   "fix": "from qgis.core import QgsProject, QgsVectorLayer, QgsFeatureRequest, QgsGeometry | if dalen_geom.contains(feat.geometry()): | houses_in_dalen.append(feat.id",
+   "count": 2,
+   "capability": "project"
+  },
+  {
+   "error": "_core.QgsCsException: Forward transform (EPSG:4326 to EPSG:32634) of bounding box failed: Invalid coordinate",
+   "fix": "{\"output_path\": \"output/repaired_labelled.qgz\", \"render_png\": \"output/repaired_labelled.png\"}",
+   "count": 1,
+   "capability": "building"
+  }
+ ],
+ "run": "20261009-103026-95df",
+ "software": "qgis",
+ "goal": "master QGIS: scripting, the interface, analysis, building map projects and whole projects from start to end",
+ "approved_at": "2026-10-10T08:23:34",
+ "score": 65.0,
+ "weakest": [
+  {
+   "task": "Build a flood-risk project for region Arden from start to end: load the regions, houses and flood zone from data/; keep only the houses inside region Arden; find those within 500 m of the flood zone and save them to output/at_risk_arden_500.gpkg; print how many there are; style the flood zone semi-transparent blue and the at-risk houses red; save the project as output/flood_arden_500.qgz and export the map as output/flood_arden_500.png.",
+   "score": 0.0,
+   "notes": "The agent failed to execute any of the required steps, returning a rate\u2011limit error instead of loading data, creating the at\u2011risk layer, counting features, styling, saving the project, or exporting the map. Consequently no output files or answer were produced."
+  },
+  {
+   "task": "Make a house-value map for region Belmor: the houses coloured by value (graduated, 5 classes) with the flood zone under them; save the project as output/houses_belmor.qgz and export the map as output/houses_belmor.png.",
+   "score": 0.0,
+   "notes": "No QGIS project file was created; the houses layer was not styled with a graduated renderer; the PNG map was not exported."
+  },
+  {
+   "task": "Open the attribute table of the regions layer, sort it by the field \"name\" in ascending order, and verify the sort order.",
+   "score": 1.5,
+   "notes": "1. Never loaded the regions.gpkg layer into QGIS - remained in dialog loops without completing file selection. 2. No attribute table was ever opened (0/1 checks failed). 3. Agent got stuck navigating between Data Source Manager, OGR dialog, and GeoPackage dialog without progressing to layer loading or post-load tasks like sorting."
+  },
+  {
+   "task": "Open the attribute table of the regions layer, sort it by the field \"name\" in ascending order, and verify the sort order.",
+   "score": 1.5,
+   "notes": "1) The agent never opened the attribute table of the regions layer; it kept navigating Data Source Manager dialogs. 2) It never performed any sort operation on the 'name' field, so the required sorted_by check fails. 3) Repeated, unnecessary clicks in the Browser/Data Source Manager indicate the agent is stuck in a loop and not following the task sequence."
+  }
+ ]
+}
