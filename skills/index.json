@@ -1,0 +1,22 @@
+{
+ "format": 1,
+ "skills": {
+  "microsoft-excel-build-spreadsheets-data-entry-fo": {
+   "id": "microsoft-excel-build-spreadsheets-data-entry-fo",
+   "version": 1,
+   "files": {
+    "SKILL.md": "65cac70d4b7248524a9f44724f31be31adb86c19e044d480bd3bd05e0b92f06e",
+    "training/best-1.png": "90b7240105e26d06483a6557c220715cde6b0a504e760dc926190fc2885fc156",
+    "training/best-2.png": "10442516d061797ba45b8c3df2252d33d85cbefd4f443a920c3058f7ab520e72",
+    "training/best-3.png": "4b50dfb7effdc65a2132ef89268ad46d5f49f8abd5a4532809d8d9e1f00c3ddd",
+    "training/report.json": "3343870edbee4ba88f189f9dce9c003cdf41164e55acd89f052913487ad78c91"
+   },
+   "publisher": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
+   "published_at": "2026-10-15T21:00:53",
+   "software": "Microsoft Excel",
+   "accuracy": 94.9,
+   "margin": 6.0,
+   "signature": "2hZhi55C8ZG2N4rG4Nzgg4dflvQjhrUq9v7X23kmILDvg9hEIcHFLLKe+1HFBQ6mlUSimEIuCzi2ZDs9VFA2DA=="
+  }
+ }
+}
