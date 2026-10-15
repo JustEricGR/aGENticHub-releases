@@ -54,7 +54,7 @@
   },
   "blender-solid-objects": {
    "id": "blender-solid-objects",
-   "version": 1,
+   "version": 2,
    "files": {
     "SKILL.md": "3248184f86ecea95d39f0027c5ab0cf80494aed11e6db2d8e609e40e8de3e867",
     "training/best-1.png": "bedaf87e5a9ea9c917eb8af329a5b3a3718d1bf0e6f1b59b7dd8f2e659a58479",
@@ -63,11 +63,11 @@
     "training/report.json": "47a2b211620d7f0baff88364023f4f030afaf0e4771fae78cf570d5ad33daa15"
    },
    "publisher": "2e70013709a9f6dde010bc3b4d76242492ab720331a9dca88eeb654082aad424",
-   "published_at": "2026-10-15T21:03:39",
+   "published_at": "2026-10-15T21:08:15",
    "software": "blender",
    "accuracy": 85.9,
    "margin": 6.5,
-   "signature": "NKXQ1e99TFQQr7I6COpq15+xcDjWK6plgiZArJ5NdzABC4x0IlueA+OrIBGG1vGRx6WbcS7e/xHrXyCFXALFDw=="
+   "signature": "rp0HhG1oDwcHIKJJo54FWE8XG6BJyRHWbxKAyoKWj1ALJAgLpZeBwTWGu9OH3ndEHNUozCpshLB41bzBmLgwBQ=="
   }
  }
 }
